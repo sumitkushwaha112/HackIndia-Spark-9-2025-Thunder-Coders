@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Human Activity Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Human Activity Recognition</h1>
+
+    <div class="section">
+        <h2>🔴 Live Camera Detection</h2>
+        <img src="{{ url_for('video_feed') }}" width="640" height="480">
+    </div>
+
+    <div class="section">
+        <h2>📁 Upload Image or Video</h2>
+        <form method="POST" action="/predict" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit" onclick="showLoading()">Predict</button>
+
+            <div id="loading" style="display:none;">
+                <div class="spinner"></div>
+                <p>Predicting... Please wait</p>
+            </div>
+        </form>
+
+        {% if prediction %}
+            <h3>🧠 Predicted Activity: {{ prediction }}</h3>
+        {% endif %}
+    </div>
+
+    <script>
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
